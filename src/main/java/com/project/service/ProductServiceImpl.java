@@ -2,9 +2,12 @@ package com.project.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.project.model.Product;
 import com.project.repository.ProductRepository;
 
+@Service
 public class ProductServiceImpl implements ProductService {
 	
 	private ProductRepository productRepo;
@@ -28,9 +31,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(Integer id) {
+	public String deleteProduct(Integer id) {
 		
+		Product product = productRepo.findById(id).get();
 		
+		if(product != null)
+		{
+			productRepo.delete(product);
+			return "Product Deleted Sucessfully";
+		}
+		
+		return "Something Wrong On Server";	
 	}
 
 }
